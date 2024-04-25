@@ -12,4 +12,9 @@ import java.util.List;
 public class InMemoryProductRepository implements ProductRepository {
 
     private final List<Product> products = Collections.synchronizedList(new LinkedList<>());
+
+    @Override
+    public List<Product> fineAll() {
+        return Collections.unmodifiableList(this.products);
+    }
 }
