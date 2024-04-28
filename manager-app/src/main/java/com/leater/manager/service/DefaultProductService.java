@@ -17,4 +17,9 @@ public class DefaultProductService implements ProductService {
     public List<Product> fineAllProducts() {
         return this.productRepository.fineAll();
     }
+
+    @Override
+    public Product createProduct(String title, String details) {
+        return this.productRepository.save(new Product(null, title, details));
+    }
 }
