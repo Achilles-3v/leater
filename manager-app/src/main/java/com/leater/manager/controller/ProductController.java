@@ -1,43 +1,37 @@
 package com.leater.manager.controller;
 
-import com.leater.manager.controller.payload.NewProductPayload;
+import com.leater.manager.controller.payload.UpdateProductPayload;
 import com.leater.manager.entity.Product;
 import com.leater.manager.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("catalogue/products/{productId:\\d+}")
 @RequiredArgsConstructor
-@RequestMapping("catalogue/products")
 public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("list")
-    public String getProductsList(Model model) {
-        model.addAttribute("products", this.productService.fineAllProducts());
-        return "catalogue/products/list";
+    @ModelAttribute("product")
+    public Product product(@PathVariable("productId") int productId) {
+        return this.productService.findProduct(productId).orElseThrow();
     }
 
-    @GetMapping("create")
-    public String getNewProductPage() {
-        return "catalogue/products/new_product";
-    }
-
-    @PostMapping("create")
-    public String createProduct(NewProductPayload payload) {
-        Product product = this.productService.createProduct(payload.title(), payload.details());
-        return "redirect:/catalogue/products/list";
-    }
-
-    @GetMapping("{productId:\\d+}")
-    public String getProduct(@PathVariable("productId") int productId, Model model) {
-        model.addAttribute("product", this.productService.findProduct(productId).orElseThrow());
+    @GetMapping
+    public String getProduct() {
         return "catalogue/products/product";
+    }
+
+    @GetMapping("edit")
+    public String getProductEditPage() {
+        return "catalogue/products/edit";
+    }
+
+    @PostMapping("edit")
+    public String updateProduct(@ModelAttribute("product") Product product, UpdateProductPayload payload) {
+        this.productService.updateProduct(product.getId(), payload.title(), payload.details());
+        return "redirect:/catalogue/products/%d".formatted(product.getId());
     }
 }
