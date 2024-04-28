@@ -17,6 +17,6 @@ public class ProductController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String getProductsList(Model model) {
         model.addAttribute("products", this.productService.fineAllProducts());
-        return "catalog/products/list";
+        return "catalogue/products/list";
     }
 }
