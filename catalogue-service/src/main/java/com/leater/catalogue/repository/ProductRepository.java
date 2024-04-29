@@ -1,6 +1,6 @@
-package com.leater.manager.repository;
+package com.leater.catalogue.repository;
 
-import com.leater.manager.entity.Product;
+import com.leater.catalogue.entity.Product;
 
 import java.util.List;
 import java.util.Optional;

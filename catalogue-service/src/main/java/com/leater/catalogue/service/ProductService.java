@@ -1,6 +1,6 @@
-package com.leater.manager.service;
+package com.leater.catalogue.service;
 
-import com.leater.manager.entity.Product;
+import com.leater.catalogue.entity.Product;
 
 import java.util.List;
 import java.util.Optional;

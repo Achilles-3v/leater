@@ -1,6 +1,6 @@
-package com.leater.manager.repository;
+package com.leater.catalogue.repository;
 
-import com.leater.manager.entity.Product;
+import com.leater.catalogue.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -34,6 +34,7 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public void deleteById(Integer id) {
-        this.products.removeIf(product -> Objects.equals(id, product.getId()));
+        this.products.removeIf(product ->
+                Objects.equals(id, product.getId()));
     }
 }

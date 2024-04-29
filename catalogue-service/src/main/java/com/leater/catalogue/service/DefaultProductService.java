@@ -1,7 +1,7 @@
-package com.leater.manager.service;
+package com.leater.catalogue.service;
 
-import com.leater.manager.entity.Product;
-import com.leater.manager.repository.ProductRepository;
+import com.leater.catalogue.entity.Product;
+import com.leater.catalogue.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
