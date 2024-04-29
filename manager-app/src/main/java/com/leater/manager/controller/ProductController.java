@@ -20,18 +20,20 @@ public class ProductController {
     }
 
     @GetMapping
-    public String getProduct() {
-        return "catalogue/products/product";
-    }
+    public String getProduct() { return "catalogue/products/product"; }
 
     @GetMapping("edit")
-    public String getProductEditPage() {
-        return "catalogue/products/edit";
-    }
+    public String getProductEditPage() { return "catalogue/products/edit"; }
 
     @PostMapping("edit")
     public String updateProduct(@ModelAttribute("product") Product product, UpdateProductPayload payload) {
         this.productService.updateProduct(product.getId(), payload.title(), payload.details());
         return "redirect:/catalogue/products/%d".formatted(product.getId());
+    }
+
+    @PostMapping("delete")
+    public String deleteProduct(@ModelAttribute("product") Product product) {
+        this.productService.deleteProduct(product.getId());
+        return "redirect:/catalogue/products/list";
     }
 }

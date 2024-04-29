@@ -12,4 +12,6 @@ public interface ProductRepository {
     Product save(Product product);
 
     Optional<Product> fineById(Integer productId);
+
+    void deleteById(Integer id);
 }
