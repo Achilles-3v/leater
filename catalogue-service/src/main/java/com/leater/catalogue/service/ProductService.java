@@ -2,12 +2,11 @@ package com.leater.catalogue.service;
 
 import com.leater.catalogue.entity.Product;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
 
-    Iterable<Product> fineAllProducts();
+    Iterable<Product> fineAllProducts(String filter);
 
     Product createProduct(String title, String details);
 

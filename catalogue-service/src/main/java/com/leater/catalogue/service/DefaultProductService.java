@@ -6,7 +6,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -17,8 +16,12 @@ public class DefaultProductService implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public Iterable<Product> fineAllProducts() {
-        return this.productRepository.findAll();
+    public Iterable<Product> fineAllProducts(String filter) {
+        if (filter != null && !filter.isBlank()) {
+            return this.productRepository.findAllByTitleLikeIgnoreCase(filter);
+        } else {
+            return this.productRepository.findAll();
+        }
     }
 
     @Override
