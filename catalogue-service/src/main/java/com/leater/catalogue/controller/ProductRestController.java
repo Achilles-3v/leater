@@ -5,11 +5,15 @@ import com.leater.catalogue.entity.Product;
 import com.leater.catalogue.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -18,6 +22,8 @@ import java.util.NoSuchElementException;
 public class ProductRestController {
 
     private final ProductService productService;
+
+    private final MessageSource messageSource;
 
     @ModelAttribute("product")
     public Product getProduct(@PathVariable("productId") int productId) {
@@ -46,5 +52,20 @@ public class ProductRestController {
             return ResponseEntity.noContent()
                     .build();
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") int productId) {
+        this.productService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ProblemDetail> handeNoSuchElementException(NoSuchElementException exception,
+                                                                     Locale locale) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,
+                        this.messageSource.getMessage(exception.getMessage(), new Object[0],
+                                exception.getMessage(), locale)));
     }
 }
