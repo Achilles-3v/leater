@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ProductService {
 
-    List<Product> fineAllProducts();
+    Iterable<Product> fineAllProducts();
 
     Product createProduct(String title, String details);
 
